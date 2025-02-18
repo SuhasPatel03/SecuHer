@@ -13,6 +13,8 @@ const TrackMePage = () => {
   const [destination, setDestination] = useState("");
   const [destinationCoords, setDestinationCoords] = useState(null);
   const [route, setRoute] = useState([]);
+  const [moving, setMoving] = useState(false);
+  const [movingIndex, setMovingIndex] = useState(0);
 
   // Custom marker icons
   const locationIcon = new L.Icon({
@@ -93,10 +95,60 @@ const TrackMePage = () => {
       const routeData = response.data.features[0].geometry.coordinates;
       const formattedRoute = routeData.map(coord => ({ lat: coord[1], lng: coord[0] }));
       setRoute(formattedRoute);
+      setMovingIndex(0); // Reset moving index when new route is set
+      setMoving(false); // Ensure movement is reset
     } catch (error) {
       console.error("Error fetching route:", error);
       alert("Failed to get route.");
     }
+  };
+
+  // Function to generate random deviation from the path
+  const getRandomDeviation = () => (Math.random() - 0.5) * 0.002; // Small deviation in lat/lng
+
+  // Start moving the marker along the route with randomness
+  const startMoving = () => {
+    if (route.length === 0) {
+      alert("No route found. Please get a route first.");
+      return;
+    }
+
+    setMoving(true);
+    let index = 0;
+
+    const move = () => {
+      if (index < route.length) {
+        const shouldDeviate = Math.random() < 0.3; // 30% chance to deviate
+        const shouldStop = Math.random() < 0.2; // 20% chance to stop
+
+        if (shouldStop) {
+          // Random stop duration between 1s to 10s
+          const stopDuration = Math.random() * 9000 + 1000;
+          setTimeout(move, stopDuration);
+          return;
+        }
+
+        if (shouldDeviate) {
+          // Apply a random deviation
+          const deviatedLat = route[index].lat + getRandomDeviation();
+          const deviatedLng = route[index].lng + getRandomDeviation();
+          setCurrentLocation({ lat: deviatedLat, lng: deviatedLng });
+        } else {
+          // Follow the route normally
+          setCurrentLocation(route[index]);
+        }
+
+        setMovingIndex(index);
+        index++;
+
+        setTimeout(move, 1000); // Move every second
+      } else {
+        setMoving(false);
+        alert("You have reached your destination!");
+      }
+    };
+
+    move();
   };
 
   return (
@@ -143,7 +195,10 @@ const TrackMePage = () => {
 
             {/* Current Location Marker */}
             {currentLocation && (
-              <Marker position={[currentLocation.lat, currentLocation.lng]} icon={locationIcon}>
+              <Marker position={[
+                moving && route.length > 0 ? route[movingIndex].lat : currentLocation.lat,
+                moving && route.length > 0 ? route[movingIndex].lng : currentLocation.lng
+              ]} icon={locationIcon}>
               </Marker>
             )}
 
@@ -157,6 +212,13 @@ const TrackMePage = () => {
             {route.length > 0 && <Polyline positions={route} color="blue" />}
           </MapContainer>
         </div>
+
+        {/* Start Button */}
+        {route.length > 0 && !moving && (
+          <button className="start-button" onClick={startMoving}>
+            Start
+          </button>
+        )}
       </div>
     </div>
   );
