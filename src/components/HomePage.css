@@ -1,0 +1,610 @@
+/* Award-Worthy Modern & Sleek HomePage.css */
+
+/* Base Reset */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    height: 100%;
+    font-family: 'Poppins', sans-serif; /* Modern font */
+    background-color: #f3f4f6;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+}
+
+/* Main container with an animated gradient background */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    padding: 40px 20px;
+    background: linear-gradient(135deg, #e0eafc, #cfdef3);
+    animation: backgroundAnimation 10s infinite alternate;
+    position: relative;
+}
+
+@keyframes backgroundAnimation {
+    from {
+        filter: hue-rotate(0deg);
+    }
+    to {
+        filter: hue-rotate(20deg);
+    }
+}
+
+/* Hero Section */
+.hero {
+    width: 100%;
+    height: 60vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #333;
+    text-align: center;
+    margin-bottom: 40px;
+    border-radius: 16px;
+    overflow: hidden;
+    position: relative;
+    background: linear-gradient(135deg, #8a2be2, #5d1ca1);
+    color: #fff;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+}
+
+.hero h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    animation: fadeIn 1s ease-out;
+}
+
+.hero p {
+    font-size: 1.5rem;
+    animation: fadeIn 1.2s ease-out;
+}
+
+/* Header styling with a prominent border and smooth fade-in */
+.header {
+    width: 100%;
+    max-width: 700px;
+    background: #fff;
+    padding: 20px 40px;
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+    border-top: 4px solid #8a2be2;
+    animation: fadeIn 1s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.header h1 {
+    font-size: 2.2rem;
+    color: #333;
+    letter-spacing: 1px;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+}
+
+.user-info span {
+    margin-right: 12px;
+    font-size: 1.1rem;
+    color: #666;
+}
+
+.header-icon {
+    color: #8a2be2;
+    font-size: 2rem;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.header-icon:hover {
+    transform: rotate(20deg) scale(1.1);
+    color: #5d1ca1;
+}
+
+/* Features grid layout */
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 30px;
+    width: 100%;
+    max-width: 1000px;
+    animation: fadeIn 1.2s ease-out;
+}
+
+/* Feature card styling for that award-winning look */
+.feature-card {
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    padding: 30px 20px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.feature-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+}
+
+/* Sparkle effect on hover to evoke that special award feeling */
+.feature-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    transform: scale(0.5);
+}
+
+.feature-card:hover::before {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Icon styling inside each feature card */
+.feature-card .icon {
+    font-size: 3.2rem;
+    color: #8a2be2;
+    margin-bottom: 15px;
+    transition: color 0.3s ease;
+}
+
+/* Title and description styling */
+.feature-card h2 {
+    font-size: 1.6rem;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.feature-card p {
+    font-size: 1rem;
+    color: #666;
+    line-height: 1.5;
+}
+
+/* Optional Award Badge Style */
+.award-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: #ffd700;  /* Gold color */
+    color: #fff;
+    padding: 5px 10px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    transform: rotate(10deg);
+    animation: badgePulse 2s infinite;
+}
+
+@keyframes badgePulse {
+    0% { transform: scale(1) rotate(10deg); }
+    50% { transform: scale(1.1) rotate(10deg); }
+    100% { transform: scale(1) rotate(10deg); }
+}
+
+/* Modern Button Style */
+.button {
+    background-color: #8a2be2;
+    color: #fff;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    cursor: pointer;
+    border: none;
+    outline: none;
+}
+
+.button:hover {
+    background-color: #5d1ca1;
+    transform: translateY(-3px);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+
+    .hero p {
+        font-size: 1.2rem;
+    }
+
+    .header {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .user-info {
+        margin-top: 10px;
+    }
+
+    .features-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+}
+
+/* Added accessibility features */
+.button:focus {
+    box-shadow: 0 0 0 2px #8a2be2;
+}
+
+.header-icon:focus {
+    box-shadow: 0 0 0 2px #8a2be2;
+}
+
+.feature-card:focus {
+    box-shadow: 0 0 0 2px #8a2be2;
+}
+
+/* Added dark mode support */
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #333;
+    }
+
+    .container {
+        background: linear-gradient(135deg, #333, #444);
+    }
+
+    .hero {
+        background: linear-gradient(135deg, #444, #555);
+    }
+
+    .header {
+        background: #333;
+    }
+
+    .feature-card {
+        background: #333;
+    }
+
+    .button {
+        background-color: #8a2be2;
+    }
+
+    .header-icon {
+        color: #8a2be2;
+    }
+
+    .feature-card .icon {
+        color: #8a2be2;
+    }
+}/* Award-Worthy Modern & Sleek HomePage.css */
+
+/* Base Reset */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    height: 100%;
+    font-family: 'Poppins', sans-serif; /* Modern font */
+    background-color: #f3f4f6;
+    overflow-x: hidden;
+}
+
+/* Main container with an animated gradient background */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    padding: 40px 20px;
+    background: linear-gradient(135deg, #e0eafc, #cfdef3);
+    animation: backgroundAnimation 10s infinite alternate;
+}
+
+@keyframes backgroundAnimation {
+    from {
+        filter: hue-rotate(0deg);
+    }
+    to {
+        filter: hue-rotate(20deg);
+    }
+}
+
+/* Hero Section */
+.hero {
+    width: 100%;
+    height: 60vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #333;
+    text-align: center;
+    margin-bottom: 40px;
+    border-radius: 16px;
+    overflow: hidden;
+    position: relative;
+    background: linear-gradient(135deg, #8a2be2, #5d1ca1);
+    color: #fff;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+}
+
+.hero h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    animation: fadeIn 1s ease-out;
+}
+
+.hero p {
+    font-size: 1.5rem;
+    animation: fadeIn 1.2s ease-out;
+}
+
+/* Header styling with a prominent border and smooth fade-in */
+.header {
+    width: 100%;
+    max-width: 700px;
+    background: #fff;
+    padding: 20px 40px;
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+    border-top: 4px solid #8a2be2;
+    animation: fadeIn 1s ease-out;
+}
+
+.violet-h {
+    color: #8a2be2; /* Violet color for the "H" */
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.header h1 {
+    font-size: 2.2rem;
+    color: #333;
+    letter-spacing: 1px;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+}
+
+.user-info span {
+    margin-right: 12px;
+    font-size: 1.1rem;
+    color: #666;
+}
+
+.header-icon {
+    color: #8a2be2;
+    font-size: 2rem;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.header-icon:hover {
+    transform: rotate(20deg) scale(1.1);
+    color: #5d1ca1;
+}
+
+/* Features grid layout */
+/* Features grid layout */
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Ensure 2 columns */
+    gap: 30px; /* Adjust the gap between buttons */
+    width: 100%;
+    max-width: 1000px;
+    animation: fadeIn 1.2s ease-out;
+    margin-top: 20px; /* Add some space above the grid */
+}
+
+/* Feature card styling for that award-winning look */
+.feature-card {
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    padding: 30px 20px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.feature-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+}
+
+/* Sparkle effect on hover to evoke that special award feeling */
+.feature-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    transform: scale(0.5);
+}
+
+.feature-card:hover::before {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Icon styling inside each feature card */
+.feature-card .icon {
+    font-size: 3.2rem;
+    color: #8a2be2;
+    margin-bottom: 15px;
+    transition: color 0.3s ease;
+}
+
+/* Title and description styling */
+.feature-card h2 {
+    font-size: 1.6rem;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.feature-card p {
+    font-size: 1rem;
+    color: #666;
+    line-height: 1.5;
+}
+
+/* Optional Award Badge Style */
+.award-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: #ffd700;  /* Gold color */
+    color: #fff;
+    padding: 5px 10px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    transform: rotate(10deg);
+    animation: badgePulse 2s infinite;
+}
+
+@keyframes badgePulse {
+    0% { transform: scale(1) rotate(10deg); }
+    50% { transform: scale(1.1) rotate(10deg); }
+    100% { transform: scale(1) rotate(10deg); }
+}
+
+/* Modern Button Style */
+.button {
+    background-color: #8a2be2;
+    color: #fff;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    cursor: pointer;
+    border: none;
+    outline: none;
+}
+
+.button:hover {
+    background-color: #5d1ca1;
+    transform: translateY(-3px);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+
+    .hero p {
+        font-size: 1.2rem;
+    }
+
+    .header {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .user-info {
+        display: flex;
+        align-items: center;
+        gap: 12px; /* Add some space between the profile link and the bell icon */
+    }
+
+    .features-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+}
+.profile-link {
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-decoration: none;
+    color: #8a2be2;
+    transition: color 0.3s ease;
+    margin-right: 12px; /* Add margin to separate from the bell icon */
+}
+
+.profile-link:hover {
+    color: #5d1ca1;
+    text-decoration: underline;
+}
+/* Add this to your HomePage.css */
+.feature-link {
+    text-decoration: none; /* Remove underline from links */
+    color: inherit; /* Inherit text color */
+}
+
+.feature-card {
+    cursor: pointer; /* Show pointer cursor on hover */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+}
+.secuher-image {
+    width: 50px; /* Adjust the width as needed */
+    height: auto; /* Maintain aspect ratio */
+    margin-right: 10px; /* Add some spacing between the logo and the text */
+}
+
+@media (max-width: 768px) {
+    .secuher-image {
+        width: 40px; /* Smaller size for mobile devices */
+    }
+}

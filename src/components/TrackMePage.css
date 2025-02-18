@@ -1,0 +1,220 @@
+/* Base Reset */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    height: 100%;
+    font-family: 'Poppins', sans-serif; /* Modern font */
+    background-color: #f3f4f6;
+    overflow-x: hidden;
+}
+
+/* Container styling */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    padding: 40px 20px;
+    background: linear-gradient(135deg, #e0eafc, #cfdef3);
+    animation: backgroundAnimation 10s infinite alternate;
+    position: relative;
+}
+
+@keyframes backgroundAnimation {
+    from {
+        filter: hue-rotate(0deg);
+    }
+    to {
+        filter: hue-rotate(20deg);
+    }
+}
+
+/* Header styling */
+.header {
+    width: 100%;
+    max-width: 700px;
+    background: #fff;
+    padding: 20px 40px;
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+    border-top: 4px solid #8a2be2;
+    animation: fadeIn 1s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.header h1 {
+    font-size: 2.2rem;
+    color: #333;
+    letter-spacing: 1px;
+}
+
+.violet-h {
+    color: #8a2be2;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+}
+
+.profile-link {
+    margin-right: 10px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-decoration: none;
+    color: #8a2be2;
+    transition: color 0.3s ease;
+}
+
+.profile-link:hover {
+    color: #5d1ca1;
+    text-decoration: underline;
+}
+
+.header-icon {
+    color: #8a2be2;
+    font-size: 2rem;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.header-icon:hover {
+    transform: rotate(20deg) scale(1.1);
+    color: #5d1ca1;
+}
+
+/* Content styling */
+.content {
+    width: 100%;
+    max-width: 700px;
+    background: #fff;
+    padding: 20px 40px;
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.content h1 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.content p {
+    font-size: 1.2rem;
+    color: #666;
+}
+
+.button {
+    background-color: #8a2be2;
+    color: #fff;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    cursor: pointer;
+    border: none;
+    outline: none;
+}
+
+.button:hover {
+    background-color: #5d1ca1;
+    transform: translateY(-3px);
+}
+
+/* Map styling */
+.map-container {
+    margin-top: 20px;
+    width: 100%;
+    height: 450px;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Leaflet map container */
+.leaflet-container {
+    height: 450px;
+    width: 100%;
+    border-radius: 16px;
+}
+
+/* Destination input field */
+.destination-input {
+    width: 100%;
+    max-width: 400px;
+    padding: 10px;
+    margin-top: 10px;
+    font-size: 1rem;
+    border: 2px solid #8a2be2;
+    border-radius: 8px;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.destination-input:focus {
+    border-color: #5d1ca1;
+}
+
+/* Find route button */
+.find-route-button {
+    background-color: #8a2be2;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    margin-top: 10px;
+}
+
+.find-route-button:hover {
+    background-color: #5d1ca1;
+    transform: translateY(-3px);
+}
+
+/* Header link */
+.header-link {
+    text-decoration: none;
+    color: inherit;
+}
+  
+.header-link:hover {
+    text-decoration: underline;
+}
+
+/* Logo image */
+.secuher-image {
+    width: 50px;
+    height: auto;
+    margin-right: 10px;
+}
+
+@media (max-width: 768px) {
+    .secuher-image {
+        width: 40px;
+    }
+}
