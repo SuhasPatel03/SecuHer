@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { MapContainer, TileLayer, Marker, Polyline } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import axios from "axios";
 import "./TrackMePage.css";
 
-const OPEN_CAGE_API_KEY = "5009acb87f44434da19e1f5e0455dfd7"; // Replace with your OpenCage API Key
-const OPEN_ROUTER_API_KEY = "5b3ce3597851110001cf6248f406006343db4ac79a5cb328d1bc08d6"; // Replace with your OpenRouter API Key
+const OPEN_CAGE_API_KEY = "5009acb87f44434da19e1f5e0455dfd7";
+const OPEN_ROUTER_API_KEY = "5b3ce3597851110001cf6248f406006343db4ac79a5cb328d1bc08d6";
 
 const TrackMePage = () => {
   const [currentLocation, setCurrentLocation] = useState(null);
@@ -15,8 +15,11 @@ const TrackMePage = () => {
   const [route, setRoute] = useState([]);
   const [moving, setMoving] = useState(false);
   const [movingIndex, setMovingIndex] = useState(0);
+  const [sosPopup, setSosPopup] = useState(false);
+  const [sosTriggered, setSosTriggered] = useState(false);
+  const [alertSent, setAlertSent] = useState(false);
+  const [sosTimeoutId, setSosTimeoutId] = useState(null);
 
-  // Custom marker icons
   const locationIcon = new L.Icon({
     iconUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png",
     iconSize: [25, 41],
@@ -24,7 +27,6 @@ const TrackMePage = () => {
     popupAnchor: [1, -34],
   });
 
-  // Get user's current location
   const trackMe = () => {
     if (!navigator.geolocation) {
       alert("Geolocation is not supported by your browser.");
@@ -42,7 +44,6 @@ const TrackMePage = () => {
     );
   };
 
-  // Convert destination address to coordinates using OpenCage API
   const getDestinationCoordinates = async () => {
     if (!destination) {
       alert("Please enter a destination.");
@@ -51,10 +52,7 @@ const TrackMePage = () => {
 
     try {
       const response = await axios.get(`https://api.opencagedata.com/geocode/v1/json`, {
-        params: {
-          q: destination,
-          key: OPEN_CAGE_API_KEY,
-        },
+        params: { q: destination, key: OPEN_CAGE_API_KEY },
       });
 
       const data = response.data;
@@ -71,7 +69,6 @@ const TrackMePage = () => {
     }
   };
 
-  // Get route using OpenRouter API
   const getRoute = async (destLat, destLng) => {
     if (!currentLocation) {
       alert("Please track your location first.");
@@ -81,32 +78,21 @@ const TrackMePage = () => {
     try {
       const response = await axios.post(
         `https://api.openrouteservice.org/v2/directions/driving-car/geojson`,
-        {
-          coordinates: [[currentLocation.lng, currentLocation.lat], [destLng, destLat]],
-        },
-        {
-          headers: {
-            "Authorization": OPEN_ROUTER_API_KEY,
-            "Content-Type": "application/json",
-          },
-        }
+        { coordinates: [[currentLocation.lng, currentLocation.lat], [destLng, destLat]] },
+        { headers: { "Authorization": OPEN_ROUTER_API_KEY, "Content-Type": "application/json" } }
       );
 
       const routeData = response.data.features[0].geometry.coordinates;
       const formattedRoute = routeData.map(coord => ({ lat: coord[1], lng: coord[0] }));
       setRoute(formattedRoute);
-      setMovingIndex(0); // Reset moving index when new route is set
-      setMoving(false); // Ensure movement is reset
+      setMovingIndex(0);
+      setMoving(false);
     } catch (error) {
       console.error("Error fetching route:", error);
       alert("Failed to get route.");
     }
   };
 
-  // Function to generate random deviation from the path
-  const getRandomDeviation = () => (Math.random() - 0.5) * 0.002; // Small deviation in lat/lng
-
-  // Start moving the marker along the route with randomness
   const startMoving = () => {
     if (route.length === 0) {
       alert("No route found. Please get a route first.");
@@ -115,40 +101,63 @@ const TrackMePage = () => {
 
     setMoving(true);
     let index = 0;
+    let stopDuration = 0;
+    let totalStopTime = 0;
 
-    const move = () => {
-      if (index < route.length) {
-        const shouldDeviate = Math.random() < 0.3; // 30% chance to deviate
-        const shouldStop = Math.random() < 0.2; // 20% chance to stop
-
-        if (shouldStop) {
-          // Random stop duration between 1s to 10s
-          const stopDuration = Math.random() * 9000 + 1000;
-          setTimeout(move, stopDuration);
-          return;
-        }
-
-        if (shouldDeviate) {
-          // Apply a random deviation
-          const deviatedLat = route[index].lat + getRandomDeviation();
-          const deviatedLng = route[index].lng + getRandomDeviation();
-          setCurrentLocation({ lat: deviatedLat, lng: deviatedLng });
-        } else {
-          // Follow the route normally
-          setCurrentLocation(route[index]);
-        }
-
-        setMovingIndex(index);
-        index++;
-
-        setTimeout(move, 1000); // Move every second
-      } else {
+    const interval = setInterval(() => {
+      if (index >= route.length) {
+        clearInterval(interval);
         setMoving(false);
         alert("You have reached your destination!");
+        return;
       }
-    };
 
-    move();
+      if (Math.random() < 0.1 && stopDuration === 0) {
+        stopDuration = Math.floor(Math.random() * 26) + 5; // Stop for random time between 5 and 30 sec
+        totalStopTime = 0;
+      }
+
+      if (stopDuration > 0) {
+        stopDuration--;
+        totalStopTime++;
+
+        if (totalStopTime > 15 && !sosTriggered && !alertSent) {
+          setSosPopup(true);
+          setSosTriggered(true);
+
+          const timeoutId = setTimeout(() => {
+            sendAlert();
+          }, 5000); // Auto send SOS if no response in 5 sec
+
+          setSosTimeoutId(timeoutId);
+        }
+
+        return;
+      }
+
+      if (sosTimeoutId) {
+        clearTimeout(sosTimeoutId);
+        setSosTimeoutId(null);
+      }
+
+      const deviation = Math.random() < 0.1 ? 0.0005 : 0;
+      const nextLocation = {
+        lat: route[index].lat + deviation,
+        lng: route[index].lng + deviation,
+      };
+
+      setMovingIndex(index);
+      setCurrentLocation(nextLocation);
+      index++;
+    }, 1000);
+  };
+
+  const sendAlert = () => {
+    if (!alertSent) {
+      setAlertSent(true);
+      setSosPopup(false);
+      alert("SOS Sent!");
+    }
   };
 
   return (
@@ -165,60 +174,36 @@ const TrackMePage = () => {
 
       <div className="content">
         <h1>TrackMe Page</h1>
-        {currentLocation ? (
-          <p>Your Location: {currentLocation.lat}, {currentLocation.lng}</p>
-        ) : (
-          <p>Click below to track your location.</p>
-        )}
+        {currentLocation ? <p>Your Location: {currentLocation.lat}, {currentLocation.lng}</p> : <p>Click below to track your location.</p>}
 
         <button className="button" onClick={trackMe}>Track Me</button>
 
         <div>
-          <input
-            type="text"
-            className="destination-input"
-            placeholder="Enter destination"
-            value={destination}
-            onChange={(e) => setDestination(e.target.value)}
-          />
-          <button className="find-route-button" onClick={getDestinationCoordinates}>
-            Find Route
-          </button>
+          <input type="text" className="destination-input" placeholder="Enter destination" value={destination} onChange={(e) => setDestination(e.target.value)} />
+          <button className="find-route-button" onClick={getDestinationCoordinates}>Find Route</button>
         </div>
 
         <div className="map-container">
           <MapContainer center={currentLocation || [20, 78]} zoom={6} className="leaflet-container">
-            <TileLayer
-              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            />
+            <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors' />
 
-            {/* Current Location Marker */}
-            {currentLocation && (
-              <Marker position={[
-                moving && route.length > 0 ? route[movingIndex].lat : currentLocation.lat,
-                moving && route.length > 0 ? route[movingIndex].lng : currentLocation.lng
-              ]} icon={locationIcon}>
-              </Marker>
-            )}
-
-            {/* Destination Marker */}
-            {destinationCoords && (
-              <Marker position={[destinationCoords.lat, destinationCoords.lng]} icon={locationIcon}>
-              </Marker>
-            )}
-
-            {/* Route Line */}
+            {currentLocation && <Marker position={[currentLocation.lat, currentLocation.lng]} icon={locationIcon}></Marker>}
+            {destinationCoords && <Marker position={[destinationCoords.lat, destinationCoords.lng]} icon={locationIcon}></Marker>}
             {route.length > 0 && <Polyline positions={route} color="blue" />}
           </MapContainer>
         </div>
 
-        {/* Start Button */}
-        {route.length > 0 && !moving && (
-          <button className="start-button" onClick={startMoving}>
-            Start
-          </button>
+        {route.length > 0 && !moving && <button className="start-button" onClick={startMoving}>Start</button>}
+
+        {sosPopup && !alertSent && (
+          <div className="sos-popup">
+            <p>Do you want to send an SOS message?</p>
+            <button className="sos-yes" onClick={sendAlert}>Yes</button>
+            <button className="sos-no" onClick={() => setSosPopup(false)}>No</button>
+          </div>
         )}
+
+        {alertSent && <p className="alert-message">THE ALERT HAS BEEN SENT</p>}
       </div>
     </div>
   );
