@@ -218,3 +218,105 @@ html, body {
         width: 40px;
     }
 }
+/* Existing styles remain unchanged */
+
+/* Start button styling */
+.start-button {
+    background-color: #8a2be2;
+    color: white;
+    padding: 12px 24px;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    margin-top: 15px;
+}
+
+.start-button:hover {
+    background-color: #5d1ca1;
+    transform: translateY(-3px);
+}
+/* Existing styles remain unchanged */
+
+/* Start button styling */
+.start-button {
+    background-color: #8a2be2;
+    color: white;
+    padding: 12px 24px;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    margin-top: 15px;
+}
+
+.start-button:hover {
+    background-color: #5d1ca1;
+    transform: translateY(-3px);
+}
+
+/* SOS Popup Styling */
+.sos-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 20px 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    z-index: 1000;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.sos-popup p {
+    font-size: 1.2rem;
+    color: #333;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+/* SOS Yes and No button styling */
+.sos-yes, .sos-no {
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.2s ease, background-color 0.3s ease;
+    margin: 5px;
+}
+
+.sos-yes {
+    background-color: #e63946;
+    color: white;
+}
+
+.sos-yes:hover {
+    background-color: #b71c1c;
+    transform: scale(1.05);
+}
+
+.sos-no {
+    background-color: #4caf50;
+    color: white;
+}
+
+.sos-no:hover {
+    background-color: #388e3c;
+    transform: scale(1.05);
+}
+
+/* Alert message styling */
+.alert-message {
+    margin-top: 15px;
+    font-size: 1.2rem;
+    color: #e63946;
+    font-weight: bold;
+}
