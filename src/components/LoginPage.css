@@ -1,0 +1,131 @@
+/* Login Page CSS - Matches Homepage Style */
+
+/* Base Reset */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    height: 100%;
+    font-family: 'Poppins', sans-serif;
+    background-color: #f3f4f6;
+    overflow-x: hidden;
+}
+
+/* Background Gradient */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background: linear-gradient(135deg, #e0eafc, #cfdef3);
+    animation: backgroundAnimation 10s infinite alternate;
+    transition: background 0.5s ease-in-out;
+}
+
+@keyframes backgroundAnimation {
+    from { filter: hue-rotate(0deg); }
+    to { filter: hue-rotate(20deg); }
+}
+
+/* Dark Mode Styling */
+.dark {
+    background: linear-gradient(135deg, #1e1e1e, #2c2c2c);
+}
+
+/* Logo Styling */
+.logo {
+    width: 250px; /* Increased size */
+    height: auto;
+    transition: all 0.3s ease-in-out;
+}
+
+.dark .logo {
+    filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.8)); /* Glow effect */
+}
+
+/* SecuHer Title Styling */
+.title {
+    font-size: 2rem;
+    font-weight: bold;
+    margin: 20px 0;
+    color: #333;
+    text-transform: capitalize;
+}
+
+/* Highlighting S and H */
+.title span {
+    color: #8a2be2;
+    font-size: 2.2rem;
+}
+
+.dark .title span {
+    color: #ff00dd73;
+    filter: drop-shadow(0 0 10px #f50659);
+}
+
+.dark .title {
+    color: #f8f9fa; /* Light color for visibility */
+}
+
+/* Buttons */
+.btn {
+    padding: 12px 34px;
+    border: none;
+    border-radius: 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    text-transform: uppercase;
+    margin: 10px;
+    background: linear-gradient(135deg, rgba(191, 10, 13, 0.215), rgba(0, 0, 255, 0.3));
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+
+    color: #333;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+    text-decoration: none;
+}
+
+
+.btn:hover {
+    background: linear-gradient(135deg, rgba(248, 1, 1, 0.4), rgba(0, 0, 255, 0.5));
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    transform: scale(1.05);
+}
+
+.dark .btn {
+    color: white;
+    background: linear-gradient(100deg, rgba(220, 19, 176, 0.945), rgba(0, 0, 255, 0.3));
+    box-shadow: 0 4px 10px rgba(255, 255, 255, 0.2);
+}
+
+.dark .btn:hover {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.3), rgba(0, 0, 255, 0.5));
+    box-shadow: 0 6px 15px rgba(255, 255, 255, 0.3);
+}
+
+/* Dark Mode Toggle Button */
+.toggle-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 1.5rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #8a2be2;
+    transition: transform 0.3s ease;
+}
+
+.toggle-btn:hover {
+    transform: scale(1.2);
+}
+
+.dark .toggle-btn {
+    color: white;
+}
