@@ -197,7 +197,7 @@ const TrackMePage = () => {
 
         {sosPopup && !alertSent && (
           <div className="sos-popup">
-            <p>Do you want to send an SOS message?</p>
+            <p>Vehicle Stopped for long time. Want to send an SOS message?</p>
             <button className="sos-yes" onClick={sendAlert}>Yes</button>
             <button className="sos-no" onClick={() => setSosPopup(false)}>No</button>
           </div>
